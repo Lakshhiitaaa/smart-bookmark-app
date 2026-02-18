@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Smart Bookmark App
 
-## Getting Started
+A simple real-time bookmark manager built using Next.js, Supabase, and Tailwind CSS.
 
-First, run the development server:
+## 🚀 Features
+
+* Google OAuth Authentication (No email/password)
+* Add bookmarks (Title + URL)
+* Private bookmarks per user (Row Level Security)
+* Real-time updates across tabs
+* Delete bookmarks
+* Fully deployed on Vercel
+
+## 🛠️ Tech Stack
+
+* Next.js (App Router)
+* Supabase (Auth + Database + Realtime)
+* Tailwind CSS
+* Vercel (Deployment)
+
+---
+
+## 🔐 Authentication
+
+Users can sign in only using Google OAuth via Supabase Auth.
+
+Sessions are handled securely and users are redirected to their private dashboard after login.
+
+---
+
+## 📂 Database Structure
+
+Table: `bookmarks`
+
+Columns:
+
+* id (UUID, Primary Key)
+* created_at (Timestamp)
+* user_id (UUID, Foreign Key → Auth Users)
+* title (Text)
+* url (Text)
+
+Row Level Security (RLS) ensures users can only access their own bookmarks.
+
+---
+
+## ⚡ Realtime Functionality
+
+Supabase Realtime subscriptions are used to update bookmarks instantly across multiple tabs without page refresh.
+
+---
+
+## 🌍 Live Deployment
+
+Vercel URL:
+https://smart-bookmark-app-five-chi.vercel.app
+
+---
+
+## 🧩 Challenges Faced & Solutions
+
+### 1. Google OAuth Redirect Loop
+
+**Problem:** After login, users were redirected back to the login page.
+**Solution:** Added `redirectTo` option in Supabase OAuth login function.
+
+---
+
+### 2. Invalid Supabase URL Error
+
+**Problem:** Environment variables were misconfigured.
+**Solution:** Corrected `.env.local` and Vercel environment variables formatting.
+
+---
+
+### 3. Localhost Redirect After Deployment
+
+**Problem:** OAuth redirected to `localhost` in production.
+**Solution:** Updated Supabase Site URL and Redirect URLs to Vercel domain.
+
+---
+
+### 4. Realtime Not Updating
+
+**Problem:** Bookmarks didn’t sync across tabs.
+**Solution:** Enabled Supabase Realtime and added subscription listeners.
+
+---
+
+## 🧪 How to Run Locally
 
 ```bash
+git clone <repo-url>
+cd smart-bookmark-app
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create `.env.local`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+NEXT_PUBLIC_SUPABASE_URL=YOUR_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_KEY
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📌 Submission Notes
 
-To learn more about Next.js, take a look at the following resources:
+* Tested with multiple Google accounts
+* Verified private bookmark isolation
+* Verified realtime sync
+* Fully production deployed
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 👩‍💻 Author
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Lakshita
